@@ -5,38 +5,28 @@ using UnityEngine;
 public class ViewManager : MonoBehaviour
 {
     public GameObject imagePrefab;
+    public GameObject parentObject;
 
-    private List<string> filePaths;
+    [SerializeField] private List<string> filePaths;
+    [SerializeField] private List<GameObject> imagePanels;
 
     private void Start()
     {
+        imagePanels = new List<GameObject>();
+
         GameObject fileManager = GameObject.Find("FileManager");
         FileManager fileManagerScript = fileManager.GetComponent<FileManager>();
         filePaths = fileManagerScript.GetFilePaths();
+
+        foreach (string path in filePaths)
+        {
+            GameObject imagePanel = Instantiate(imagePrefab);
+            var imagePanelScript = imagePanel.GetComponent<ImagePanel>();
+            imagePanelScript.Path = path;
+            imagePanels.Add(imagePanel);
+            imagePanel.transform.parent = parentObject.transform;
+        }
     }
 
-    /// <summary>
-    /// 画像UIを生成し、UIに画像をアタッチする
-    /// </summary>
-    /// <param name="path"></param>
-    /// <param name="prefab"></param>
-    private void GenerateImagePanel(string path, GameObject prefab)
-    {
-        GameObject prefabInstance = Instantiate(prefab);
-    }
-
-    /// <summary>
-    /// pathをもとに参照した画像ファイルをTexture2Dとして返す
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns>画像ファイルを読み込ませたテクスチャ(Texture2D)</returns>
-    private Texture2D LoadTexture(string path)
-    {
-        // Load the image from the path
-        byte[] bytes = System.IO.File.ReadAllBytes(path);
-        Texture2D texture = new Texture2D(2, 2);
-        texture.LoadImage(bytes);
-
-        return texture;
-    }
+    
 }

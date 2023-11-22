@@ -12,7 +12,8 @@ public class FileManager : MonoBehaviour
 
     private void Start()
     {
-
+        SetFolderPath();
+        SetFilePaths();
     }
 
     public string GetFolderPath()
