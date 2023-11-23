@@ -13,7 +13,13 @@ public class FileManager : MonoBehaviour
     private void Start()
     {
         SetFolderPath();
-        SetFilePaths();
+        filePaths = SetFilePaths();
+        filePaths = ShuffleList(filePaths);
+
+        foreach (string path in filePaths)
+        {
+            Debug.Log(path);
+        }
     }
 
     public string GetFolderPath()
@@ -32,7 +38,7 @@ public class FileManager : MonoBehaviour
         return filePaths;
     }
 
-    public void SetFilePaths()
+    private List<string> SetFilePaths()
     {
         string folderPath = GetFolderPath();
         string[] folder = System.IO.Directory.GetFiles(folderPath, "*.png", System.IO.SearchOption.TopDirectoryOnly);
@@ -42,5 +48,20 @@ public class FileManager : MonoBehaviour
         {
             Debug.Log(item);
         }
+
+        return filePaths;
+    }
+
+    private List<string> ShuffleList(List<string> originalList)
+    {
+        var newList = originalList;
+        for (int i = newList.Count - 1; i > 0; i--)
+        {
+            var j = Random.Range(0, i + 1);
+            var temp = newList[i];
+            newList[i] = newList[j];
+            newList[j] = temp;
+        }
+        return newList;
     }
 }
