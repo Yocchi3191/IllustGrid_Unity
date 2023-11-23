@@ -6,14 +6,14 @@ public class FolderPathManager : MonoBehaviour
 {
     public string folderPath;
 
-    // Start is called before the first frame update
     void Start()
     {
         folderPath = string.Empty;
 
         if (string.IsNullOrEmpty(folderPath))
         {
-            OpenSFB();
+            var newPath = OpenFileBrowser();
+            SetFolderPath(newPath);
         }
     }
 
@@ -22,19 +22,24 @@ public class FolderPathManager : MonoBehaviour
         return folderPath;
     }
 
-    public void SetFolderPath(string path)
+    private void SetFolderPath(string path)
     {
         folderPath = path;
         Debug.Log(folderPath);
     }
 
-    public void OpenSFB()
+    /// <summary>
+    /// ファイル選択ダイアログを開く。プラグインのStandaloneFileBrowserの機能で実装
+    /// </summary>
+    /// <returns>ファイルパス (string) </returns>
+    private string OpenFileBrowser()
     {
         var paths = StandaloneFileBrowser.OpenFolderPanel("フォルダを選んでね！", "", false);
 
         if (paths.Length > 0)
         {
-            SetFolderPath(paths[0]);
+            return paths[0];
         }
+        return String.Empty;
     }
 }

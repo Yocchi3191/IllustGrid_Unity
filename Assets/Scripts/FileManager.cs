@@ -52,6 +52,11 @@ public class FileManager : MonoBehaviour
         return filePaths;
     }
 
+    /// <summary>
+    /// 引数に渡したListの中身をシャッフルして返す
+    /// </summary>
+    /// <param name="originalList"></param>
+    /// <returns><シャッフルされたList (List<string>) /returns>
     private List<string> ShuffleList(List<string> originalList)
     {
         var newList = originalList;
