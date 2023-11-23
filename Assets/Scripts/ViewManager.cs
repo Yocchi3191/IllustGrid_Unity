@@ -24,9 +24,11 @@ public class ViewManager : MonoBehaviour
             var imagePanelScript = imagePanel.GetComponent<ImagePanel>();
             imagePanelScript.Path = path;
             imagePanels.Add(imagePanel);
-            imagePanel.transform.parent = parentObject.transform;
+
+            Transform parentTransform = parentObject.transform;
+            imagePanel.transform.SetParent(parentTransform, false);
         }
     }
 
-    
+
 }

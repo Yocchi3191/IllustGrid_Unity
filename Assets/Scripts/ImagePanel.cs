@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ImagePanel : MonoBehaviour
 {
-    private string path;
+    [SerializeField] private string path;
+    [SerializeField] private Texture2D texture;
+
     public string Path
     {
         get { return path; }
@@ -13,7 +15,7 @@ public class ImagePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Texture2D texture = LoadTexture(Path);
+        texture = LoadTexture(Path);
         AttachTexture(texture);
     }
 
@@ -39,6 +41,7 @@ public class ImagePanel : MonoBehaviour
     private void AttachTexture(Texture2D texture)
     {
         GameObject imagePanel = gameObject;
-        imagePanel.GetComponent<UnityEngine.UI.Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        Rect rect = new Rect(0, 0, texture.width, texture.height);
+        imagePanel.GetComponent<UnityEngine.UI.Image>().sprite = Sprite.Create(texture, rect, Vector2.zero);
     }
 }
