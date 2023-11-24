@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImagePanel : MonoBehaviour
 {
@@ -15,8 +16,12 @@ public class ImagePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject imagePanel = gameObject;
+        var image = imagePanel.GetComponent<Image>();
+
         texture = LoadTexture(Path);
-        AttachTexture(texture);
+        image.sprite = NewTexture(texture);
+        image.preserveAspect = true;
     }
 
     /// <summary>
@@ -38,10 +43,10 @@ public class ImagePanel : MonoBehaviour
     /// 引数に渡したテクスチャデータを自分のテクスチャとしてアタッチする
     /// </summary>
     /// <param name="texture"></param>
-    private void AttachTexture(Texture2D texture)
+    private Sprite NewTexture(Texture2D texture)
     {
-        GameObject imagePanel = gameObject;
         Rect rect = new Rect(0, 0, texture.width, texture.height);
-        imagePanel.GetComponent<UnityEngine.UI.Image>().sprite = Sprite.Create(texture, rect, Vector2.zero);
+        var newSprite = Sprite.Create(texture, rect, Vector2.zero);
+        return newSprite;
     }
 }
