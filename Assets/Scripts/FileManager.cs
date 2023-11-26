@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,13 +7,11 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class FileManager : MonoBehaviour
 {
-    [SerializeField] private string folderPath;
-    [SerializeField] private List<string> filePaths;
+    [SerializeField] private string[] filePaths;
     public GameObject folderPathManager;
 
     private void Start()
     {
-        SetFolderPath();
         filePaths = SetFilePaths();
         filePaths = ShuffleList(filePaths);
 
@@ -22,28 +21,20 @@ public class FileManager : MonoBehaviour
         }
     }
 
-    public string GetFolderPath()
-    {
-        return folderPath;
-    }
-
-    public void SetFolderPath()
-    {
-        var folderPathScript = folderPathManager.GetComponent<FolderPathManager>();
-        folderPath = folderPathScript.GetFolderPath();
-    }
-
-    public List<string> GetFilePaths()
+    public string[] GetFilePaths()
     {
         return filePaths;
     }
 
-    private List<string> SetFilePaths()
+    /// <summary>
+    /// folderPathをもとに、Systemのファイルアクセス機能で任意のフォルダ内のpngファイルを取得
+    /// </summary>
+    /// <returns> 任意のフォルダ内のpngファイル一覧 string[] </returns>
+    private string[] SetFilePaths()
     {
-        string folderPath = GetFolderPath();
-        string[] folder = System.IO.Directory.GetFiles(folderPath, "*.png", System.IO.SearchOption.TopDirectoryOnly);
-        filePaths = new List<string>(folder);
-
+        var folderPathManagerScript = folderPathManager.GetComponent<FolderPathManager>();
+        string folderPath = folderPathManagerScript.GetFolderPath();
+        string[] filePaths = System.IO.Directory.GetFiles(folderPath, "*.png", System.IO.SearchOption.TopDirectoryOnly);
         foreach (var item in filePaths)
         {
             Debug.Log(item);
@@ -57,12 +48,12 @@ public class FileManager : MonoBehaviour
     /// </summary>
     /// <param name="originalList"></param>
     /// <returns><シャッフルされたList (List<string>) /returns>
-    private List<string> ShuffleList(List<string> originalList)
+    private string[] ShuffleList(string[] originalList)
     {
         var newList = originalList;
-        for (int i = newList.Count - 1; i > 0; i--)
+        for (int i = newList.Length - 1; i > 0; i--)
         {
-            var j = Random.Range(0, i + 1);
+            var j = UnityEngine.Random.Range(0, i + 1);
             var temp = newList[i];
             newList[i] = newList[j];
             newList[j] = temp;

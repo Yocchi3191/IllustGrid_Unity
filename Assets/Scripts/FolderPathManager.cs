@@ -4,7 +4,7 @@ using System;
 
 public class FolderPathManager : MonoBehaviour
 {
-    public string folderPath;
+    [SerializeField] private string folderPath;
 
     void Start()
     {
@@ -21,7 +21,6 @@ public class FolderPathManager : MonoBehaviour
     {
         return folderPath;
     }
-
     private void SetFolderPath(string path)
     {
         folderPath = path;
@@ -29,7 +28,8 @@ public class FolderPathManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ファイル選択ダイアログを開く。プラグインのStandaloneFileBrowserの機能で実装
+    /// ファイル選択ダイアログを開く。プラグインのStandaloneFileBrowser(以下SFB)の機能で実装
+    /// SFBの戻り値は長さ1のstring[]。[0]にファイルパスが格納される
     /// </summary>
     /// <returns>ファイルパス (string) </returns>
     private string OpenFileBrowser()

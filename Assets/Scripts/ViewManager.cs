@@ -7,7 +7,7 @@ public class ViewManager : MonoBehaviour
     public GameObject imagePrefab;
     public GameObject parentObject;
 
-    [SerializeField] private List<string> filePaths;
+    [SerializeField] private string[] filePaths;
     [SerializeField] private List<GameObject> imagePanels;
 
     private void Start()

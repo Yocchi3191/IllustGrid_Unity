@@ -373,7 +373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f506716771c088246bd9786a8cec1321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  folderPath: 
   filePaths: []
   folderPathManager: {fileID: 858578081}
 --- !u!1 &760361987
