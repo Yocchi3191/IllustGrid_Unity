@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImagePanel : MonoBehaviour
 {
-    private string path;
+    [SerializeField] private string path;
+    [SerializeField] private Texture2D texture;
+
     public string Path
     {
         get { return path; }
@@ -13,8 +16,12 @@ public class ImagePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Texture2D texture = LoadTexture(Path);
-        AttachTexture(texture);
+        GameObject imagePanel = gameObject;
+        var image = imagePanel.GetComponent<Image>();
+
+        texture = LoadTexture(Path);
+        image.sprite = NewTexture(texture);
+        image.preserveAspect = true;
     }
 
     /// <summary>
@@ -36,9 +43,10 @@ public class ImagePanel : MonoBehaviour
     /// 引数に渡したテクスチャデータを自分のテクスチャとしてアタッチする
     /// </summary>
     /// <param name="texture"></param>
-    private void AttachTexture(Texture2D texture)
+    private Sprite NewTexture(Texture2D texture)
     {
-        GameObject imagePanel = gameObject;
-        imagePanel.GetComponent<UnityEngine.UI.Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        Rect rect = new Rect(0, 0, texture.width, texture.height);
+        var newSprite = Sprite.Create(texture, rect, Vector2.zero);
+        return newSprite;
     }
 }

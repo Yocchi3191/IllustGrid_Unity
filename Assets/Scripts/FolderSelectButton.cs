@@ -1,21 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FolderSelectButton : MonoBehaviour
 {
-    public event EventHandler Clicked;
-
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Œ»İ‚ÌƒV[ƒ“‚ğÄ“Ç‚·‚é
+    /// </summary>
+    public void ReloadScene()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }

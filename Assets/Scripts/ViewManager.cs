@@ -7,7 +7,7 @@ public class ViewManager : MonoBehaviour
     public GameObject imagePrefab;
     public GameObject parentObject;
 
-    [SerializeField] private List<string> filePaths;
+    [SerializeField] private string[] filePaths;
     [SerializeField] private List<GameObject> imagePanels;
 
     private void Start()
@@ -24,9 +24,11 @@ public class ViewManager : MonoBehaviour
             var imagePanelScript = imagePanel.GetComponent<ImagePanel>();
             imagePanelScript.Path = path;
             imagePanels.Add(imagePanel);
-            imagePanel.transform.parent = parentObject.transform;
+
+            Transform parentTransform = parentObject.transform;
+            imagePanel.transform.SetParent(parentTransform, false);
         }
     }
 
-    
+
 }
